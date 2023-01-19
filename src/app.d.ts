@@ -6,11 +6,11 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			userName?: import('./utils/users.js').UserName;
+			userName?: import('./utils/users.js').UserName
 		}
 		// interface PageData {}
 		// interface Platform {}
 	}
 }
 
-export {};
+export { }
