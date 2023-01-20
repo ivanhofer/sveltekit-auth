@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types.js'
-import { checkAuth, hasAllRoles } from '$utils'
+import { checkAuth, hasAnyRole } from '$utils'
 
 export const load: PageServerLoad = (event) => {
-  checkAuth(event, hasAllRoles('manage-payments'))
+  checkAuth(event, hasAnyRole('manage-users', 'manage-payments'))
+
 }
