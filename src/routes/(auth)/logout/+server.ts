@@ -1,13 +1,9 @@
-import { json, redirect, type RequestEvent } from '@sveltejs/kit'
+import { json } from '@sveltejs/kit'
 import type { RequestHandler } from './$types.js'
-
-export const _authGuard = ({ locals }: RequestEvent) => {
-	if (!locals.userName)
-		throw redirect(307, '/')
-}
+import { checkAuth, isAuthenticated } from '$utils'
 
 export const DELETE: RequestHandler = (event) => {
-	_authGuard(event)
+	checkAuth(event, isAuthenticated('/'))
 
 	const { cookies } = event
 

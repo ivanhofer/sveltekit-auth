@@ -1,6 +1,4 @@
-export type UserName = keyof typeof users
-
-const users = {
+const users: Record<string, string> = {
 	admin: 'Admin',
 	adminRestricted: 'Restricted Admin',
 	editor: 'Editor',

@@ -1,9 +1,9 @@
-import { json } from '@sveltejs/kit'
-import { _authGuard } from '../+layout.server.js' // potential issue: did you import the function from the correct path? If you go one level to far, you will not check everything
 import type { RequestHandler } from './$types.js'
+import { json } from '@sveltejs/kit'
+import { checkAuth, isAnonymous } from '$utils'
 
 export const POST: RequestHandler = (event) => {
-	_authGuard(event) // potential issue: not all users know that you need to manually check auth in endpoint functions (can be somehow solved by documentation)
+	checkAuth(event, isAnonymous('/'))
 
 	const { params, cookies } = event
 

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation'
-   import type { UserName } from '../../../utils/users.js'
 
-	const doLogin = async (userName: UserName) => {
+	const doLogin = async (userName: string) => {
 		await fetch(`/login/${userName}`, { method: 'POST' })
 		await invalidateAll()
 		goto('/')

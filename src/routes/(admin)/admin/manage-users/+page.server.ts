@@ -1,37 +1,30 @@
-import { type RequestEvent, error } from '@sveltejs/kit'
-import type { LayoutServerLoad } from '../$types.js'
-import { _authGuard as adminAuthGuard } from '../+layout.server.js'
-import { getRolesForUser } from '../../../../utils/roles.js'
-import type { UserName } from '../../../../utils/users.js'
-import type { Actions, Action } from './$types.js'
+import type { PageServerLoad, Actions, Action } from './$types.js'
+import { checkAuth, hasAllRoles } from '$utils'
+import type { RequestEvent } from '@sveltejs/kit'
 
-export const _authGuard = (event: RequestEvent) => {
-	adminAuthGuard(event) // potential issue: you have to remember to manually call all the functions from the paths above. Easy to miss one, if you refactor your code
+// for consistency, to make re-using it easier
+const hasManageUsers = (event: RequestEvent) => checkAuth(event, hasAllRoles('manage-users'))
 
-	if (!getRolesForUser(event.locals.userName as UserName).includes('manage-users'))
-		throw error(401, 'missing manage-users role')
+export const load: PageServerLoad = (event) => {
+	hasManageUsers(event)
 }
 
-export const load: LayoutServerLoad = (event) => {
-	_authGuard(event)
-}
-
-const createUser = ((event) => {
-	_authGuard(event) // potential issue: not all users know that you need to manually check auth in form actions (can be somehow solved by documentation)
+const createUser = (event => {
+	hasManageUsers(event)
 
 	// ... implementation
 
 }) satisfies Action
 
-const modifyUser = ((event) => {
-	_authGuard(event)
+const modifyUser = (event => {
+	hasManageUsers(event)
 
 	// ... implementation
 
 }) satisfies Action
 
-const deleteUser = ((event) => {
-	_authGuard(event)
+const deleteUser = (event => {
+	hasManageUsers(event)
 
 	// ... implementation
 
