@@ -1,12 +1,16 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 
-// and what to do when importing types
+import type { Role } from '$utils'
+
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			userName?: import('./utils/users.js').UserName
+			user: {
+				name: string | null
+				roles: Role[]
+			}
 		}
 		// interface PageData {}
 		// interface Platform {}

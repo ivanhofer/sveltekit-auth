@@ -1,10 +1,20 @@
 import type { Handle } from '@sveltejs/kit'
-import type { UserName } from './utils/users.js'
+import { getRolesForUser } from '$utils'
 
 export const handle: Handle = ({ event, resolve }) => {
-	const userName = event.cookies.get('user-name')
-	if (userName) {
-		event.locals.userName = userName as UserName
+	const name = event.cookies.get('user-name')
+	if (name) {
+		// authenticated used
+		event.locals.user = {
+			name,
+			roles: getRolesForUser(name),
+		}
+	} else {
+		// anonymous user
+		event.locals.user = {
+			name: null,
+			roles: [],
+		}
 	}
 
 	return resolve(event)

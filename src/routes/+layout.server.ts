@@ -1,5 +1,5 @@
 import type { LayoutServerLoad } from './$types.js'
 
 export const load: LayoutServerLoad = ({ locals }) => {
-	return { loggedIn: !!locals.userName }
+	return { loggedIn: !!locals.user.name }
 }
