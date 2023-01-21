@@ -15,11 +15,4 @@ export const _authGuard = ({ locals }: RequestEvent) => {
 
 export const load: LayoutServerLoad = (event) => {
 	_authGuard(event)
-
-	const roles = getRolesForUser(event.locals.userName as UserName)
-
-	return {
-		canManageUsers: roles.includes('manage-users'),
-		canManagePayments: roles.includes('manage-payments'),
-	}
 }
